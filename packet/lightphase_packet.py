@@ -1,6 +1,6 @@
 import struct
 
-from adafruit_bluefruit_connect.packet import Packet
+from packet import Packet
 
 
 class LightPhasePacket(Packet):
