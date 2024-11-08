@@ -59,13 +59,18 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
-        print('remote: {}'.format(bytearray(value).decode()))
+        print('remote!: {}'.format(bytearray(value).decode()))
         try:
+            print('Trying to make packet')
             packet = Packet.from_bytes(value)
+            print('Packet made {}'.format(packet))
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
         except ValueError as e:
             print('Value Error: {}'.format(e))
+        except Exception as e:
+            print('General error: {}'.format(e))
+
 
 
 class UartService(Service):
