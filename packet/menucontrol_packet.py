@@ -1,10 +1,9 @@
 import struct
 
-from packet import Packet
-
+from .packet import Packet
 
 class MenuControlPacket(Packet):
-    """A packet controlling the sensor reading. 0 for off, 1 for on"""
+    """A packet that controls the sensor reading. 0 for off, 1 for on"""
 
     _FMT_PARSE = "<xxBx"
     PACKET_LENGTH = struct.calcsize(_FMT_PARSE)
