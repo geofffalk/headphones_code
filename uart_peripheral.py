@@ -104,7 +104,8 @@ class Application(dbus.service.Object):
 class UartApplication(Application):
     def __init__(self, bus):
         Application.__init__(self, bus)
-        service = UartService(bus, 0, self.on_packet_received) 
+        service = UartService(bus, 0)
+        service.add_listener(self.on_packet_received) 
         self.add_service(service)
 
     def on_packet_received(packet):
