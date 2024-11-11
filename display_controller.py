@@ -129,7 +129,7 @@ class DisplayController:
                         frontMargin = [0 for i in range(self.tickerOffsetFront)]
                         backMargin = [0 for i in range(self.tickerOffsetBack)]
                         left = frontMargin + self.tickerLeft[-self.tickerVisibleLength:] + backMargin
-                        right = frontMargin + self.tickerRight[-self.tickerVisibleLength:] + backMargin, frontMargin + self.tickerRight[-self.tickerVisibleLength:] + backMargin
+                        right = frontMargin + self.tickerRight[-self.tickerVisibleLength:] + backMargin
                         for i in range(self.PIXEL_GROUP_SIZE):
                             self.pixels[(self.PIXEL_GROUP_SIZE) + i] = self.apply_brightness(self.colorMap[left[i]])
                         for i in range(self.PIXEL_GROUP_SIZE):
