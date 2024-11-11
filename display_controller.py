@@ -162,7 +162,7 @@ class DisplayController:
                             self.pixels[(self.PIXEL_GROUP_SIZE) - 1 - i] = (0, 0, 0)
                         self.pixels.show()
                     else:
-                        if staticRightSequenceCursor % 2 == 0:
+                        if self.staticRightSequenceCursor % 2 == 0:
                             for i in range(self.PIXEL_GROUP_SIZE):
                                 self.pixels[(self.PIXEL_GROUP_SIZE) - 1 - i]  = self.apply_brightness(self.pixelRightStart[i])
                             self.pixels.show()
@@ -170,7 +170,7 @@ class DisplayController:
                             for i in range(self.PIXEL_GROUP_SIZE):
                                 self.pixels[(self.PIXEL_GROUP_SIZE) - 1 - i] = (0, 0, 0)
                             self.pixels.show()
-                        staticRightSequenceCursor += 1
+                        self.staticRightSequenceCursor += 1
                 if self.staticRightSequenceCursor >= len(self.staticRightSequence) - 1 and self.staticLeftSequenceCursor >= len(self.staticLeftSequence) - 1:
                 # if self.staticLeftSequenceCursor >= len(self.staticLeftSequence) - 1:
                     self.playState = self.PS_STANDBY
