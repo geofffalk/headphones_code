@@ -115,7 +115,7 @@ class UartApplication(Application):
         service.add_listener(self.on_packet_received) 
         self.add_service(service)
         self.display_controller = DisplayController()
-        display_thread = Thread(target=DisplayController.run)
+        display_thread = Thread(target=self.display_controller.run)
         display_thread.start()
 
     def on_packet_received(cls, packet):
