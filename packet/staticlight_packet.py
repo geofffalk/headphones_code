@@ -9,7 +9,7 @@ class StaticLightPacket(Packet):
     PACKET_LENGTH = struct.calcsize(_FMT_PARSE)
     # _FMT_CONSTRUCT doesn't include the trailing checksum byte.
     _FMT_CONSTRUCT = "<2s10B10B10B10BHBBB"
-    _TYPE_HEADER = "!I"
+    _TYPE_HEADER = b"!I"
 
     def __init__(self, leftTop, leftBottom, rightTop, rightBottom, duration, leftRepetitions, rightRepetitions, brightness):
         if len(leftTop) == 10 and all(0 <= l <= 7 for l in leftTop):
