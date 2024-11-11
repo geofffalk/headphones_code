@@ -67,6 +67,7 @@ class RxCharacteristic(Characteristic):
             print('Trying to make packet')
             print('First characters {}'.format((b[0:2]).decode()))
             packet = Packet.from_bytes(b)
+            print('Packet mad')
             print('Packet made {}'.format(packet))
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
