@@ -8,8 +8,8 @@ from example_advertisement import register_ad_cb, register_ad_error_cb
 from example_gatt_server import Service, Characteristic
 from example_gatt_server import register_app_cb, register_app_error_cb
 from packet.packet import Packet
-from packet.menucontrol_packet import MenuControlPacket
-from packet.staticlight_packet import StaticLightPacket
+from threading import Thread
+from display_controller import DisplayController
 
 BLUEZ_SERVICE_NAME =           'org.bluez'
 DBUS_OM_IFACE =                'org.freedesktop.DBus.ObjectManager'
@@ -21,6 +21,7 @@ UART_TX_CHARACTERISTIC_UUID =  '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
 UART_RX_CHARACTERISTIC_UUID =  '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 LOCAL_NAME =                   'bliss-headphones'
 mainloop = None
+    
 
 class TxCharacteristic(Characteristic):
     def __init__(self, bus, index, service):
@@ -113,12 +114,13 @@ class UartApplication(Application):
         service = UartService(bus, 0)
         service.add_listener(self.on_packet_received) 
         self.add_service(service)
+        self.display_controller = DisplayController()
+        display_thread = Thread(target=DisplayController.run)
+        display_thread.start()
 
     def on_packet_received(cls, packet):
         print('Packet received: {}'.format(packet))
-        if isinstance(packet, StaticLightPacket):
-            print('Static light received!')
-
+        cls.display_controller.update(packet)
 
 class UartAdvertisement(Advertisement):
     def __init__(self, bus, index):
