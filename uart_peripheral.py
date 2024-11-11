@@ -63,6 +63,7 @@ class RxCharacteristic(Characteristic):
     def WriteValue(self, value, options):
         try:
             packet = Packet.from_bytes(bytes(value))
+            print('Packet created {}'.format(packet))
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
         except ValueError as e:
