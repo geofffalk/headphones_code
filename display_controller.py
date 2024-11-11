@@ -129,9 +129,9 @@ class DisplayController:
                         left = frontMargin + self.tickerLeft[-self.tickerVisibleLength:] + backMargin
                         right = frontMargin + self.tickerRight[-self.tickerVisibleLength:] + backMargin, frontMargin + self.tickerRight[-self.tickerVisibleLength:] + backMargin
                         for i in range(self.NUM_PIXELS / 2):
-                            self.pixels[i] = self.apply_brightness(self.colorMap[left[i]])
+                            self.pixels[(self.NUM_PIXELS / 2) + i] = self.apply_brightness(self.colorMap[left[i]])
                         for i in range(self.NUM_PIXELS / 2):
-                            self.pixels[self.NUM_PIXELS - i - 1] = self.apply_brightness(self.colorMap[right[i]])
+                            self.pixels[(self.NUM_PIXELS / 2) - 1 - i] = self.apply_brightness(self.colorMap[right[i]])
                         self.pixels.show()
                     else:
                         self.pixels.fill((0, 0, 0))
@@ -141,32 +141,32 @@ class DisplayController:
                     self.lastLeftStaticTickTime = self.tickTime
                     if self.staticLeftSequenceCursor >= len(self.staticLeftSequence) - 1:
                         for i in range(self.NUM_PIXELS / 2):
-                            self.pixels[i] = (0, 0, 0)
+                            self.pixels[(self.NUM_PIXELS / 2) + i] = (0, 0, 0)
                         self.pixels.show()
                     else:
                         if self.staticLeftSequenceCursor % 2 == 0:
                             for i in range(self.NUM_PIXELS / 2):
-                                self.pixels[i] = self.apply_brightness(self.pixelLeftStart[i])
+                                self.pixels[(self.NUM_PIXELS / 2) + i] = self.apply_brightness(self.pixelLeftStart[i])
                             self.pixels.show()
                         else:
                             for i in range(self.NUM_PIXELS / 2):
-                                self.pixels[i] = (0, 0, 0)
+                                self.pixels[(self.NUM_PIXELS / 2) + i] = (0, 0, 0)
                             self.pixels.show()
                         self.staticLeftSequenceCursor += 1
                 if self.playState == self.PS_STATIC_READY or self.tickTime - self.lastRightStaticTickTime > self.staticRightSequence[staticRightSequenceCursor]:
                     self.lastRightStaticTickTime = self.tickTime
                     if self.staticRightSequenceCursor >= len(self.staticRightSequence) - 1:
                         for i in range(self.NUM_PIXELS / 2):
-                            self.pixels[self.NUM_PIXELS - i - 1] = (0, 0, 0)
+                            self.pixels[(self.NUM_PIXELS / 2) - 1 - i] = (0, 0, 0)
                         self.pixels.show()
                     else:
                         if staticRightSequenceCursor % 2 == 0:
                             for i in range(self.NUM_PIXELS / 2):
-                                self.pixels[self.NUM_PIXELS - i - 1]  = self.apply_brightness(self.pixelRightStart[i])
+                                self.pixels[(self.NUM_PIXELS / 2) - 1 - i]  = self.apply_brightness(self.pixelRightStart[i])
                             self.pixels.show()
                         else:
                             for i in range(self.NUM_PIXELS / 2):
-                                self.pixels[self.NUM_PIXELS - i - 1] = (0, 0, 0)
+                                self.pixels[(self.NUM_PIXELS / 2) - 1 - i] = (0, 0, 0)
                             self.pixels.show()
                         staticRightSequenceCursor += 1
                 if self.staticRightSequenceCursor >= len(self.staticRightSequence) - 1 and self.staticLeftSequenceCursor >= len(self.staticLeftSequence) - 1:
