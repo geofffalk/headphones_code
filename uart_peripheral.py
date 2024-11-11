@@ -112,7 +112,7 @@ class UartApplication(Application):
         service.add_listener(self.on_packet_received) 
         self.add_service(service)
 
-    def on_packet_received(self, packet: Packet):
+    def on_packet_received(packet: Packet):
         print('Packet received: {}'.format(packet))
         if isinstance(packet, StaticLightPacket):
             print('Static light received!')
