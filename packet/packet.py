@@ -67,9 +67,10 @@ class Packet:
         """
         if len(packet) < 3:
             raise ValueError("Packet too short")
-        packet_class = cls._type_to_class.get(packet[0:2], None)
+        packet_type =  bytearray(packet[0:2]).decode()
+        packet_class = cls._type_to_class.get(packet_type, None)
         if not packet_class:
-            raise ValueError("Unregistered packet type {}".format(packet[0:2]))
+            raise ValueError("Unregistered packet type {}".format(packet_type))
 
         # In case this was called from a subclass, make sure the parsed
         # type matches up with the current class.

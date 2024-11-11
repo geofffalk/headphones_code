@@ -9,6 +9,7 @@ from example_gatt_server import Service, Characteristic
 from example_gatt_server import register_app_cb, register_app_error_cb
 from packet.packet import Packet
 from packet.menucontrol_packet import MenuControlPacket
+from packet.staticlight_packet import StaticLightPacket
 
 BLUEZ_SERVICE_NAME =           'org.bluez'
 DBUS_OM_IFACE =                'org.freedesktop.DBus.ObjectManager'
@@ -65,7 +66,7 @@ class RxCharacteristic(Characteristic):
             print('raw!: {}'.format(ints))
             print('Trying to make packet')
             print('First characters {}'.format(bytearray(ints[0:2]).decode()))
-            packet = Packet.from_bytes(bytearray(ints))
+            packet = Packet.from_bytes(ints)
             print('Packet made {}'.format(packet))
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
