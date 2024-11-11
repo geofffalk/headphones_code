@@ -119,6 +119,8 @@ class UartApplication(Application):
 
     def on_packet_received(packet):
         print('Packet received: {}'.format(packet))
+        if isinstance(packet, StaticLightPacket):
+            print('Static light received!')
 
 
 class UartAdvertisement(Advertisement):
