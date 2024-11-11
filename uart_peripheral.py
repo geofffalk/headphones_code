@@ -61,10 +61,11 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
-        print('hello')
         try:
-            packet = Packet.from_bytes(bytes(value))
-            print('Packet created {}'.format(packet))
+            b = bytes(value)
+            print('raw!: {}'.format(b))
+            print('Trying to make packet')
+            packet = Packet.from_bytes(b)
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
         except ValueError as e:
@@ -114,7 +115,7 @@ class UartApplication(Application):
         service.add_listener(self.on_packet_received) 
         self.add_service(service)
 
-    def on_packet_received(packet: Packet):
+    def on_packet_received(packet):
         print('Packet received: {}'.format(packet))
         if isinstance(packet, StaticLightPacket):
             print('Static light received!')
