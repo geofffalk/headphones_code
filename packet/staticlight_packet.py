@@ -53,7 +53,6 @@ class StaticLightPacket(Packet):
         else:
             raise ValueError(
                 "Brightness must be an int between 0 and 255")
-        print('Static made')
 
     @classmethod
     def parse_private(cls, packet):
@@ -76,11 +75,11 @@ class StaticLightPacket(Packet):
         return self.add_checksum(partial_packet)
 
     def __str__(self):
-        return "Static light: Left Top: {}, Left Bottom: {}, Right Top: {}, Right Bottom {}, duration: {}, intensity {}, leftRepetitions {}, rightRepetitions {}".format(
-            self._leftTop, self._leftBottom, self._rightTop, self._rightBottom, self._duration, self._leftRepetitions, self._rightRepetitions)
+        return "Static light: Left Top: {}, Left Bottom: {}, Right Top: {}, Right Bottom {}, duration: {}, brightness {}, leftRepetitions {}, rightRepetitions {}".format(
+            self._leftTop, self._leftBottom, self._rightTop, self._rightBottom, self._duration, self._brightness, self._leftRepetitions, self._rightRepetitions)
     
     def to_save_string(self):
-        return "!I|{}|{}|{}|{}|{}|{}|{}".format(self._leftTop, self._leftBottom, self._rightTop, self._rightBottom, self._duration, self._leftRepetitions, self._rightRepetitions)
+        return "!I|{}|{}|{}|{}|{}|{}|{}|{}".format(self._leftTop, self._leftBottom, self._rightTop, self._rightBottom, self._duration, self._brightness, self._leftRepetitions, self._rightRepetitions)
 
     @property
     def leftTop(self):
