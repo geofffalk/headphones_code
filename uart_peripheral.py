@@ -62,11 +62,11 @@ class RxCharacteristic(Characteristic):
 
     def WriteValue(self, value, options):
         try:
-            ints = [int(v) for v in value]
-            print('raw!: {}'.format(ints))
+            b = bytes(value)
+            print('raw!: {}'.format(b))
             print('Trying to make packet')
-            print('First characters {}'.format(bytearray(ints[0:2]).decode()))
-            packet = Packet.from_bytes(ints)
+            print('First characters {}'.format((b[0:2]).decode()))
+            packet = Packet.from_bytes(b)
             print('Packet made {}'.format(packet))
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
