@@ -18,7 +18,7 @@ class DisplayController:
     MS_PER_SECOND = 1000
     DS_PER_SECOND = 10
     NUM_PIXELS = 10
-    PIXEL_GROUP_SIZE = int(NUM_PIXELS / 2)
+    PIXEL_GROUP_SIZE = 5
     PIXEL_ORDER = neopixel.GRB
     spi = board.SPI()
     pixels = neopixel.NeoPixel_SPI(spi, NUM_PIXELS,
@@ -223,7 +223,7 @@ class DisplayController:
         pixelLeftStart = []
         pixelRightStart = []
         # bottom
-        for i in range(10):
+        for i in range(self.PIXEL_GROUP_SIZE):
             leftVal = packet.leftBottom[i]
             rightVal = packet.rightBottom[i]
             leftColor = self.colorMap[leftVal]
