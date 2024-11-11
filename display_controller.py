@@ -147,7 +147,7 @@ class DisplayController:
                     else:
                         if self.staticLeftSequenceCursor % 2 == 0:
                             for i in range(self.PIXEL_GROUP_SIZE):
-                                print('Pixel group size {} i {} pixels {} pixelLeftStart {}'.format(self.PIXEL_GROUP_SIZE, i, self.pixels, self.pixelLeftStart))
+                                # print('Pixel group size {} i {} pixels {} pixelLeftStart {}'.format(self.PIXEL_GROUP_SIZE, i, self.pixels, self.pixelLeftStart))
                                 self.pixels[(self.PIXEL_GROUP_SIZE) + i] = self.apply_brightness(self.pixelLeftStart[i])
                             self.pixels.show()
                         else:
@@ -221,16 +221,16 @@ class DisplayController:
             self.tempBrightnessStartTime = self.monotonic_ms()
     
     def showStaticLights(self, packet: StaticLightPacket):
-        pixelLeftStart = []
-        pixelRightStart = []
+        self.pixelLeftStart = []
+        self.pixelRightStart = []
         # bottom
         for i in range(self.PIXEL_GROUP_SIZE):
             leftVal = packet.leftBottom[i]
             rightVal = packet.rightBottom[i]
             leftColor = self.colorMap[leftVal]
             rightColor = self.colorMap[rightVal]
-            pixelLeftStart.append(leftColor)
-            pixelRightStart.append(rightColor)
+            self.pixelLeftStart.append(leftColor)
+            self.pixelRightStart.append(rightColor)
 
         self.staticLeftSequenceCursor = 0
         self.staticLeftSequence = [0]
