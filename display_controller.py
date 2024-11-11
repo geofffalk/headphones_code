@@ -113,8 +113,8 @@ class DisplayController:
                 if self.playState == self.PS_TICKER_READY or self.tickTime - self.lastTickTime > self.tickerDuration:
                     self.playState = self.PS_TICKER_PLAYING
                     self.lastTickTime = self.tickTime
-                    patternCursor = 0 if patternCursor >= len(self.tickerPattern) - 1 else patternCursor + 1
-                    step = self.tickerPattern[patternCursor]
+                    self.patternCursor = 0 if self.patternCursor >= len(self.tickerPattern) - 1 else self.patternCursor + 1
+                    step = self.tickerPattern[self.patternCursor]
                     if step != 0:
                         # tickerLeftTop = tickerLeftTop[-step:] + tickerLeftTop[:-step]
                         self.tickerLeft = self.tickerLeft[-step:] + self.tickerLeft[:-step]
