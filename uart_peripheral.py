@@ -61,6 +61,7 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
+        print('hello')
         try:
             packet = Packet.from_bytes(bytes(value))
             print('Packet created {}'.format(packet))
