@@ -38,6 +38,7 @@ class DisplayController:
     tickerLeft = [0]
     tickerRight= [0]
     tickerPattern = (1)
+    tickerVisibleLength = PIXEL_GROUP_SIZE
     patternCursor = 0
     tickerProgress = 0
     tickerLength = 0
@@ -256,15 +257,15 @@ class DisplayController:
         colCursor = 0
         tickerOffsetFront = packet.offsetFront
         tickerOffsetBack = packet.offsetBack
-        tickerVisibleLength = 10 - tickerOffsetFront - tickerOffsetBack
+        self.tickerVisibleLength = self.PIXEL_GROUP_SIZE - tickerOffsetFront - tickerOffsetBack
         self.tempBrightness = self.baselineBrightness if packet.brightness == 0 else packet.brightness
         for i in range(packet.length):
             left.append(packet.left[colCursor])
             right.append(packet.right[colCursor])
             colCursor = colCursor + 2 if colCursor < len(packet.left) - 2 else 0
-        left += [0] * tickerVisibleLength
-        right += [0] * tickerVisibleLength
-        self.tickerLength = packet.length + tickerVisibleLength
+        left += [0] * self.tickerVisibleLength
+        right += [0] * self.tickerVisibleLength
+        self.tickerLength = packet.length + self.tickerVisibleLength
         self.tickerLeft = left
         self.tickerRight = right
         self.tickerDuration = packet.speed * self.DS_PER_SECOND
