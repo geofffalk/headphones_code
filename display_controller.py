@@ -147,6 +147,7 @@ class DisplayController:
                     else:
                         if self.staticLeftSequenceCursor % 2 == 0:
                             for i in range(self.PIXEL_GROUP_SIZE):
+                                print('Pixel group size {} i {} pixels {} pixelLeftStart {}'.format(self.PIXEL_GROUP_SIZE, i, self.pixels, self.pixelLeftStart))
                                 self.pixels[(self.PIXEL_GROUP_SIZE) + i] = self.apply_brightness(self.pixelLeftStart[i])
                             self.pixels.show()
                         else:
