@@ -60,8 +60,8 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
-        print('remote!: {}'.format(bytearray(value).decode()))
         try:
+            print('raw!: {}'.format((value).decode()))
             print('Trying to make packet')
             packet = Packet.from_bytes(value)
             print('Packet made {}'.format(packet))
