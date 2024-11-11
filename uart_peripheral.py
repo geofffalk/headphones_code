@@ -64,7 +64,6 @@ class RxCharacteristic(Characteristic):
         try:
             b = bytes(value)
             print('raw!: {}'.format(b))
-            print('Trying to make packet')
             packet = Packet.from_bytes(b)
             if self.service.on_packet_received and callable(self.service.on_packet_received):
                 self.service.on_packet_received(packet)
