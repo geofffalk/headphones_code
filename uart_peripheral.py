@@ -61,7 +61,7 @@ class RxCharacteristic(Characteristic):
 
     def WriteValue(self, value, options):
         try:
-            print('raw!: {}'.format((value).decode()))
+            print('raw!: {}'.format(value))
             print('Trying to make packet')
             packet = Packet.from_bytes(value)
             print('Packet made {}'.format(packet))
