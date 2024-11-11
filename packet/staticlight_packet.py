@@ -12,6 +12,7 @@ class StaticLightPacket(Packet):
     _TYPE_HEADER = b"!I"
 
     def __init__(self, leftTop, leftBottom, rightTop, rightBottom, duration, leftRepetitions, rightRepetitions, brightness):
+        print('hello')
         if len(leftTop) == 10 and all(0 <= l <= 7 for l in leftTop):
             self._leftTop = leftTop
         else:
@@ -66,6 +67,8 @@ class StaticLightPacket(Packet):
         leftRepetitions = params[41]
         rightRepetitions = params[42]
         brightness = params[43]
+        print('42 {}'.format(params[42]))
+        print('43 {}'.format(params[43]))
         return cls(leftTop, leftBottom, rightTop, rightBottom, duration, leftRepetitions, rightRepetitions, brightness)
 
     def to_bytes(self):
