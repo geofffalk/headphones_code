@@ -155,7 +155,7 @@ class DisplayController:
                                 self.pixels[(self.PIXEL_GROUP_SIZE) + i] = (0, 0, 0)
                             self.pixels.show()
                         self.staticLeftSequenceCursor += 1
-                if self.playState == self.PS_STATIC_READY or self.tickTime - self.lastRightStaticTickTime > self.staticRightSequence[staticRightSequenceCursor]:
+                if self.playState == self.PS_STATIC_READY or self.tickTime - self.lastRightStaticTickTime > self.staticRightSequence[self.staticRightSequenceCursor]:
                     self.lastRightStaticTickTime = self.tickTime
                     if self.staticRightSequenceCursor >= len(self.staticRightSequence) - 1:
                         for i in range(self.PIXEL_GROUP_SIZE):
