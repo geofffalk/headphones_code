@@ -75,16 +75,13 @@ class Packet:
         # type matches up with the current class.
         if not issubclass(packet_class, cls):
             raise ValueError("Packet type is not a {}".format(cls.__name__))
-        
-        print('1')
 
         if len(packet) != packet_class.PACKET_LENGTH:
             raise ValueError("Wrong length packet")
 
-        print('2')
         if cls.checksum(packet[0:-1]) != packet[-1]:
             raise ValueError("Bad checksum")
-        print('3')
+
         # A packet class may do further validation of the data.
         return packet_class.parse_private(packet)
 

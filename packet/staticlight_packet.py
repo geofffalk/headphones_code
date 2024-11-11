@@ -57,13 +57,12 @@ class StaticLightPacket(Packet):
     @classmethod
     def parse_private(cls, packet):
         params = struct.unpack(cls._FMT_PARSE, packet)
-        print('4')
+        print(params)
         leftTop = params[0:10]
         leftBottom = params[10:20]
         rightTop = params[20:30]
         rightBottom = params[30:40]
         duration = params[40]
-        print('5')
         leftRepetitions = params[41]
         rightRepetitions = params[42]
         brightness = params[43]
