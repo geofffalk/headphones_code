@@ -13,6 +13,7 @@ import time
 import board
 import neopixel_spi as neopixel
 from video_player import OMXPlayerSync
+from threading import Thread
 import os
 
 class DisplayController:
@@ -101,7 +102,8 @@ class DisplayController:
         openingAnimation.animate()
         self._running = True
         self._video_player = OMXPlayerSync(True)
-        self._video_player.run()
+        video_thread = Thread(target=self._video_player.run)
+        video_thread.start()
         os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
 
     def update(self, packet: Packet): 
@@ -301,7 +303,7 @@ class DisplayController:
             self.playState = self.PS_STATIC_READY
 
     def playVideo(self, packet: PlayVideoPacket):
-        self._video_player.play_file(self.videoMap[packet.videoIndex])
+        self._video_player.set_filename(self.videoMap[packet.videoIndex])
 
     def stopVideo(self, packet: StopVideoPacket):
         self._video_player.stop()

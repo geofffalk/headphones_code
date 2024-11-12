@@ -156,17 +156,18 @@ class OMXPlayerSync():
         if not self.is_conductor:
             self.read_position_conductor()
 
-        # while self._running:
-        #     self.play_file(self.playlist[self.playlist_index])
-        #     if not self.args.loop and self.playlist_index == 0:
-        #         break
+        while True:
+            if (self.filename):
+                self.play_file(self.filename)
+    
+    def set_filename(self, filename):
+        self.filename = filename
 
     def play_file(self, filename):
         if not os.path.isfile(filename):
             print("WARNING: %s file not found" % filename)
             return
         self._running = True
-        self.filename = filename
         self.position_local = 0.0
         self.position_local_oldage = 0.0
         self.position_local_oldage_count = 0
@@ -273,6 +274,7 @@ class OMXPlayerSync():
 
     def stop(self):
         self._running = False
+        self.filename = None
         self.kill_omxplayer()
 
     def read_position_local(self):
@@ -311,6 +313,7 @@ class OMXPlayerSync():
             pass
 
     def kill_omxplayer_and_exit(self, *args):
+        self.logger.debug('Killing and exiting')
         self.kill_omxplayer()
         sys.exit(0)
 
