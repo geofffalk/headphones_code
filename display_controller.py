@@ -1,7 +1,9 @@
 
+from packet.play_video_packet import PlayVideoPacket
 from packet.staticlight_packet import StaticLightPacket
 from packet.devicestatus_packet import DeviceStatusPacket
 from packet.sensorcontrol_packet import SensorControlPacket
+from packet.stop_video_packet import StopVideoPacket
 from packet.ticker_packet import TickerPacket
 from packet.brightness_packet import BrightnessPacket
 from packet.color_update_packet import ColorUpdatePacket
@@ -11,6 +13,7 @@ from adafruit_led_animation.color import BLUE
 import time
 import board
 import neopixel_spi as neopixel
+from video_player import OMXPlayerSync
 
 class DisplayController:
 
@@ -91,6 +94,7 @@ class DisplayController:
         openingAnimation.add_cycle_complete_receiver(self.onOpeningAnimationComplete)
         openingAnimation.animate()
         self._running = True
+        self._video_player = OMXPlayerSync().run()
 
     def update(self, packet: Packet): 
         if isinstance(packet, BrightnessPacket): 
@@ -101,6 +105,11 @@ class DisplayController:
             self.showTicker(packet)
         elif isinstance(packet, ColorUpdatePacket):
             self.updateColor(packet)
+        elif isinstance(packet, PlayVideoPacket):
+            self.playVideo(packet)
+        elif isinstance(packet, StopVideoPacket):
+            self.stopVideo()
+            
     
     def terminate(self):
         self._running = False
@@ -282,6 +291,9 @@ def updateColor(self, packet: ColorUpdatePacket):
         self.staticLeftSequenceCursor = 0
         self.staticRightSequenceCursor = 0
         self.playState = self.PS_STATIC_READY
-    
-   
-        
+
+def playVideo(self, packet: PlayVideoPacket):
+    self._video_player.play_file('test.mp4')
+
+def stopVideo(self):
+    self._video_player.stop()
