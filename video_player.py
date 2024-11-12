@@ -145,9 +145,9 @@ class OMXPlayerSync():
     def run(self):
         self.omxplayer_options.append("--loop")
 
-        if not os.path.isfile(self.filename):
-            print("ERROR: none of the supplied filenames are found")
-            sys.exit(1)
+        # if not os.path.isfile(self.filename):
+        #     print("ERROR: none of the supplied filenames are found")
+        #     sys.exit(1)
 
         self.omxplayer_options.append("-o %s" % "both")
         self.omxplayer_options.append('--no-keys')
