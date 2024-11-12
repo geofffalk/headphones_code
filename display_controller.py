@@ -254,9 +254,9 @@ class DisplayController:
         left = []
         right = []
         colCursor = 0
-        tickerOffsetFront = packet.offsetFront
-        tickerOffsetBack = packet.offsetBack
-        self.tickerVisibleLength = self.PIXEL_GROUP_SIZE - tickerOffsetFront - tickerOffsetBack
+        self.tickerOffsetFront = packet.offsetFront
+        self.tickerOffsetBack = packet.offsetBack
+        self.tickerVisibleLength = self.PIXEL_GROUP_SIZE - self.tickerOffsetFront - self.tickerOffsetBack
         self.tempBrightness = self.baselineBrightness if packet.brightness == 0 else packet.brightness
         for i in range(packet.length):
             left.append(packet.left[colCursor])
