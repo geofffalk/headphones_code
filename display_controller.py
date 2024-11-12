@@ -100,7 +100,8 @@ class DisplayController:
         openingAnimation.add_cycle_complete_receiver(self.onOpeningAnimationComplete)
         openingAnimation.animate()
         self._running = True
-        self._video_player = OMXPlayerSync(True).run()
+        self._video_player = OMXPlayerSync(True)
+        self._video_player.run()
         os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
 
     def update(self, packet: Packet): 
