@@ -19,7 +19,7 @@ class DisplayController:
     DS_PER_SECOND = 10
     NUM_PIXELS = 10
     PIXEL_GROUP_SIZE = 5
-    PIXEL_ORDER = neopixel.GRB
+    PIXEL_ORDER = neopixel.RGB
     spi = board.SPI()
     pixels = neopixel.NeoPixel_SPI(spi, NUM_PIXELS,
                                 pixel_order=PIXEL_ORDER, auto_write=False)
