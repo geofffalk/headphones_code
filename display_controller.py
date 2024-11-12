@@ -94,7 +94,7 @@ class DisplayController:
         openingAnimation.add_cycle_complete_receiver(self.onOpeningAnimationComplete)
         openingAnimation.animate()
         self._running = True
-        self._video_player = OMXPlayerSync().run()
+        self._video_player = OMXPlayerSync(True).run()
 
     def update(self, packet: Packet): 
         if isinstance(packet, BrightnessPacket): 
