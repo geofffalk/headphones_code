@@ -9,7 +9,7 @@ from example_gatt_server import Service, Characteristic
 from example_gatt_server import register_app_cb, register_app_error_cb
 from packet.packet import Packet
 from threading import Thread
-from .display_controller import DisplayController
+from display_controller import DisplayController
 
 BLUEZ_SERVICE_NAME =           'org.bluez'
 DBUS_OM_IFACE =                'org.freedesktop.DBus.ObjectManager'
