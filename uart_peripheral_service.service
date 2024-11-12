@@ -1,0 +1,13 @@
+[Unit]
+Description=Uart Peripheral
+After=network.target
+
+[Service]
+User=geoff
+WorkingDirectory=/home/geoff
+ExecStartPre=/bin/sleep 1
+ExecStart=/home/geoff/uart_peripheral
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
