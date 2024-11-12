@@ -59,7 +59,8 @@ class TxCharacteristic(Characteristic):
 class RxCharacteristic(Characteristic):
     def __init__(self, bus, index, service):
         Characteristic.__init__(self, bus, index, UART_RX_CHARACTERISTIC_UUID,
-                                ['write-without-response'], service)
+                                ['write', 'write-without-response'], service)
+        self.mtu = 45
 
     def WriteValue(self, value, options):
         try:
