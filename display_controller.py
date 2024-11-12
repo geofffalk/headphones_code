@@ -14,6 +14,7 @@ import time
 import board
 import neopixel_spi as neopixel
 from video_player import OMXPlayerSync
+import os
 
 class DisplayController:
 
@@ -101,6 +102,7 @@ class DisplayController:
         openingAnimation.animate()
         self._running = True
         self._video_player = OMXPlayerSync(True).run()
+        os.system("sudo fbi -a -noverbose -T 1 -t 1 logo.png")
 
     def update(self, packet: Packet): 
         if isinstance(packet, BrightnessPacket): 
