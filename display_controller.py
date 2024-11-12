@@ -56,6 +56,12 @@ class DisplayController:
     tempBrightnessDuration = 0
     tempBrightnessStartTime = 0
 
+    videoMap = {
+        0: 'synctest.mp4',
+        1: 'synctest.mp4',
+        2: 'synctest.mp4'
+    }
+
     tickerPatternMap = {
         0: (1, 1),
         1: (1,1,-1),
@@ -293,7 +299,7 @@ def updateColor(self, packet: ColorUpdatePacket):
         self.playState = self.PS_STATIC_READY
 
 def playVideo(self, packet: PlayVideoPacket):
-    self._video_player.play_file('test.mp4')
+    self._video_player.play_file(self.videoMap[packet.videoIndex])
 
 def stopVideo(self):
     self._video_player.stop()
