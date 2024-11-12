@@ -145,7 +145,7 @@ class OMXPlayerSync():
     def run(self):
         self.omxplayer_options.append("--loop")
 
-        if not filter(lambda x: os.path.isfile(x), self.playlist):
+        if not os.path.isfile(self.filename):
             print("ERROR: none of the supplied filenames are found")
             sys.exit(1)
 
@@ -201,9 +201,9 @@ class OMXPlayerSync():
                 if wait_for_sync:
                     sync_timer = time()
 
-            if not self.read_position_local():
-                self.increment_playlist_index()
-                break
+            # if not self.read_position_local():
+            #     self.increment_playlist_index()
+            #     break
 
             if self.hangup_detected():
                 break
@@ -219,7 +219,7 @@ class OMXPlayerSync():
 
             if not self.is_conductor:
                 if self.filename != self.filename_conductor:
-                    self.set_playlist_index()
+                    self.filename = self.filename_conductor
                     break
 
                 deviation = self.position_conductor - self.position_local
