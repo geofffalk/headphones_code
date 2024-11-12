@@ -134,6 +134,7 @@ class Characteristic(dbus.service.Object):
         self.uuid = uuid
         self.service = service
         self.flags = flags
+        self.mtu = 45
         self.descriptors = []
         dbus.service.Object.__init__(self, bus, self.path)
 
