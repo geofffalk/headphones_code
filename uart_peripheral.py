@@ -62,6 +62,7 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
+        print('Options {}', options)
         try:
             b = bytes(value)
             print('raw!: {}'.format(b))
