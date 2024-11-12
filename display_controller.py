@@ -1,8 +1,7 @@
-from packet.play_video_packet import PlayVideoPacket
+from packet.video_control_packet import VideoControlPacket
 from packet.staticlight_packet import StaticLightPacket
 from packet.devicestatus_packet import DeviceStatusPacket
 from packet.sensorcontrol_packet import SensorControlPacket
-from packet.stop_video_packet import StopVideoPacket
 from packet.ticker_packet import TickerPacket
 from packet.brightness_packet import BrightnessPacket
 from packet.color_update_packet import ColorUpdatePacket
@@ -115,10 +114,8 @@ class DisplayController:
             self.showTicker(packet)
         elif isinstance(packet, ColorUpdatePacket):
             self.updateColor(packet)
-        elif isinstance(packet, PlayVideoPacket):
-            self.playVideo(packet)
-        elif isinstance(packet, StopVideoPacket):
-            self.stopVideo(packet)
+        elif isinstance(packet, VideoControlPacket):
+            self.controlVideo(packet)
             
     
     def terminate(self):
@@ -302,8 +299,10 @@ class DisplayController:
             self.staticRightSequenceCursor = 0
             self.playState = self.PS_STATIC_READY
 
-    def playVideo(self, packet: PlayVideoPacket):
-        self._video_player.set_filename(self.videoMap[packet.videoIndex])
-
-    def stopVideo(self, packet: StopVideoPacket):
-        self._video_player.stop()
+    def controlVideo(self, packet: VideoControlPacket):
+        if packet.controlCode == 3:
+            self._video_player.set_filename(self.videoMap[packet.videoIndex])
+        elif packet.controlCode == 2 or packet.controlCode == 1: 
+            self._video_player.play_pause()
+        elif packet.controlCode == 0:
+            self._video_player.stop()

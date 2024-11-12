@@ -271,6 +271,9 @@ class OMXPlayerSync():
                 sleep(1)
 
         self.kill_omxplayer()
+    
+    def play_pause(self):
+        self.controller.playPause()
 
     def stop(self):
         self._running = False
