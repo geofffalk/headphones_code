@@ -1,5 +1,3 @@
-
-# https://scribles.net/creating-ble-gatt-server-uart-service-on-raspberry-pi/#Ref02
 import sys
 import dbus, dbus.mainloop.glib
 from gi.repository import GLib
@@ -7,9 +5,6 @@ from example_advertisement import Advertisement
 from example_advertisement import register_ad_cb, register_ad_error_cb
 from example_gatt_server import Service, Characteristic
 from example_gatt_server import register_app_cb, register_app_error_cb
-from packet.packet import Packet
-from threading import Thread
-from display_controller import DisplayController
 
 BLUEZ_SERVICE_NAME =           'org.bluez'
 DBUS_OM_IFACE =                'org.freedesktop.DBus.ObjectManager'
@@ -17,11 +12,10 @@ LE_ADVERTISING_MANAGER_IFACE = 'org.bluez.LEAdvertisingManager1'
 GATT_MANAGER_IFACE =           'org.bluez.GattManager1'
 GATT_CHRC_IFACE =              'org.bluez.GattCharacteristic1'
 UART_SERVICE_UUID =            '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-UART_TX_CHARACTERISTIC_UUID =  '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-UART_RX_CHARACTERISTIC_UUID =  '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-LOCAL_NAME =                   'bliss-headphones'
+UART_RX_CHARACTERISTIC_UUID =  '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+UART_TX_CHARACTERISTIC_UUID =  '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+LOCAL_NAME =                   'rpi-gatt-server'
 mainloop = None
-    
 
 class TxCharacteristic(Characteristic):
     def __init__(self, bus, index, service):
@@ -62,29 +56,13 @@ class RxCharacteristic(Characteristic):
                                 ['write'], service)
 
     def WriteValue(self, value, options):
-        try:
-            b = bytes(value)
-            print('raw!: {}'.format(b))
-            packet = Packet.from_bytes(b)
-            if self.service.on_packet_received and callable(self.service.on_packet_received):
-                self.service.on_packet_received(packet)
-        except ValueError as e:
-            print('Value Error: {}'.format(e))
-        except Exception as e:
-            print('General error: {}'.format(e))
-
-
+        print('remote: {}'.format(bytearray(value).decode()))
 
 class UartService(Service):
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, UART_SERVICE_UUID, True)
         self.add_characteristic(TxCharacteristic(bus, 0, self))
         self.add_characteristic(RxCharacteristic(bus, 1, self))
-        self.on_packet_received = None
-    
-    def add_listener(self, listener):
-        self.on_packet_received = listener
-        
 
 class Application(dbus.service.Object):
     def __init__(self, bus):
@@ -111,16 +89,7 @@ class Application(dbus.service.Object):
 class UartApplication(Application):
     def __init__(self, bus):
         Application.__init__(self, bus)
-        service = UartService(bus, 0)
-        service.add_listener(self.on_packet_received) 
-        self.add_service(service)
-        self.display_controller = DisplayController()
-        display_thread = Thread(target=self.display_controller.run)
-        display_thread.start()
-
-    def on_packet_received(cls, packet):
-        print('Packet received: {}'.format(packet))
-        cls.display_controller.update(packet)
+        self.add_service(UartService(bus, 0))
 
 class UartAdvertisement(Advertisement):
     def __init__(self, bus, index):
