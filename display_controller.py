@@ -288,19 +288,19 @@ class DisplayController:
         self.updateDeviceStatus(6)
         self.playState = self.PS_TICKER_READY
 
-def updateColor(self, packet: ColorUpdatePacket):
-    if self.playState == self.PS_TICKER_READY or self.playState == self.PS_TICKER_PLAYING:
-        self.tickerLeft = list(map(lambda x: packet.leftColor if x != 0 else 0, self.tickerLeft))
-        self.tickerRight = list(map(lambda x: packet.rightColor if x != 0 else 0, self.tickerRight))
-    elif self.playState == self.PS_STATIC_READY or self.playState == self.PS_STATIC_PLAYING or self.playState == self.PS_STANDBY:
-        self.pixelLeftStart = list(map(lambda x: self.colorMap[0] if x[0] == 0 and x[1] == 0 and x[2] == 0 else self.colorMap[packet.leftColor], self.pixelLeftStart))
-        self.pixelRightStart = list(map(lambda x: self.colorMap[0] if x[0] == 0 and x[1] == 0 and x[2] == 0 else self.colorMap[packet.rightColor], self.pixelRightStart))
-        self.staticLeftSequenceCursor = 0
-        self.staticRightSequenceCursor = 0
-        self.playState = self.PS_STATIC_READY
+    def updateColor(self, packet: ColorUpdatePacket):
+        if self.playState == self.PS_TICKER_READY or self.playState == self.PS_TICKER_PLAYING:
+            self.tickerLeft = list(map(lambda x: packet.leftColor if x != 0 else 0, self.tickerLeft))
+            self.tickerRight = list(map(lambda x: packet.rightColor if x != 0 else 0, self.tickerRight))
+        elif self.playState == self.PS_STATIC_READY or self.playState == self.PS_STATIC_PLAYING or self.playState == self.PS_STANDBY:
+            self.pixelLeftStart = list(map(lambda x: self.colorMap[0] if x[0] == 0 and x[1] == 0 and x[2] == 0 else self.colorMap[packet.leftColor], self.pixelLeftStart))
+            self.pixelRightStart = list(map(lambda x: self.colorMap[0] if x[0] == 0 and x[1] == 0 and x[2] == 0 else self.colorMap[packet.rightColor], self.pixelRightStart))
+            self.staticLeftSequenceCursor = 0
+            self.staticRightSequenceCursor = 0
+            self.playState = self.PS_STATIC_READY
 
-def playVideo(self, packet: PlayVideoPacket):
-    self._video_player.play_file(self.videoMap[packet.videoIndex])
+    def playVideo(self, packet: PlayVideoPacket):
+        self._video_player.play_file(self.videoMap[packet.videoIndex])
 
-def stopVideo(self, packet: StopVideoPacket):
-    self._video_player.stop()
+    def stopVideo(self, packet: StopVideoPacket):
+        self._video_player.stop()
