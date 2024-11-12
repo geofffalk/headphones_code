@@ -1,4 +1,3 @@
-
 from packet.play_video_packet import PlayVideoPacket
 from packet.staticlight_packet import StaticLightPacket
 from packet.devicestatus_packet import DeviceStatusPacket
