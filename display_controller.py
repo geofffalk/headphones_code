@@ -103,7 +103,6 @@ class DisplayController:
         self._video_player = OMXPlayerSync(True)
         video_thread = Thread(target=self._video_player.run)
         video_thread.start()
-        os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
 
     def update(self, packet: Packet): 
         if isinstance(packet, BrightnessPacket): 

@@ -155,6 +155,8 @@ class OMXPlayerSync():
 
         if not self.is_conductor:
             self.read_position_conductor()
+        
+        os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
 
         while True:
             if (self.filename):
@@ -274,8 +276,18 @@ class OMXPlayerSync():
     
     def play_pause(self):
         self.controller.playPause()
+        if self.is_conductor:
+            data = {
+            "command": "play_pause",
+            }
+            self.serial.write(json.dumps(data).encode("utf-8"))
 
     def stop(self):
+        if self.is_conductor:
+            data = {
+            "command": "stop",
+            }
+            self.serial.write(json.dumps(data).encode("utf-8"))
         self._running = False
         self.filename = None
         self.kill_omxplayer()
@@ -348,8 +360,14 @@ class OMXPlayerSync():
             # self.logger.debug(f"Data read from conductor: {decoded}")
             obj = json.loads(decoded)
             self.logger.debug(f"Json read from conductor: {obj}")
-            self.position_conductor = float(obj["pos"])
-            self.filename_conductor = obj["video_file"]
+            if obj["command"] != None:
+                if obj["command"] == 'play_pause':
+                    self.controller.playPause()
+                elif obj["command"] == 'stop':
+                    self.stop()
+            else:
+                self.position_conductor = float(obj["pos"])
+                self.filename_conductor = obj["video_file"]
         except Exception as e:
             self.logger.error(e)
             pass

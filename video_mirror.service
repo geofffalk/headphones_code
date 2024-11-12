@@ -1,0 +1,12 @@
+[Unit]
+Description=Uart Peripheral
+After=network.target
+
+[Service]
+User=geoff
+ExecStartPre=/bin/sleep 1
+ExecStart=/usr/bin/python3 /home/geoff/headphones_code/video_mirror.py 
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
