@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 User=geoff
-WorkingDirectory=/home/geoff
+WorkingDirectory=/home/geoff/headphones_code
 ExecStartPre=/bin/sleep 1
-ExecStart=/home/geoff/uart_peripheral
+ExecStart=/home/geoff/headphones_code/uart_peripheral
 Restart=always
 
 [Install]

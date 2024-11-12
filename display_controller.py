@@ -102,7 +102,7 @@ class DisplayController:
         openingAnimation.animate()
         self._running = True
         self._video_player = OMXPlayerSync(True).run()
-        os.system("sudo fbi -a -noverbose -T 1 -t 1 logo.png")
+        os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
 
     def update(self, packet: Packet): 
         if isinstance(packet, BrightnessPacket): 
