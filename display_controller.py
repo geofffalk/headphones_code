@@ -115,7 +115,7 @@ class DisplayController:
         elif isinstance(packet, PlayVideoPacket):
             self.playVideo(packet)
         elif isinstance(packet, StopVideoPacket):
-            self.stopVideo()
+            self.stopVideo(packet)
             
     
     def terminate(self):
@@ -302,5 +302,5 @@ def updateColor(self, packet: ColorUpdatePacket):
 def playVideo(self, packet: PlayVideoPacket):
     self._video_player.play_file(self.videoMap[packet.videoIndex])
 
-def stopVideo(self):
+def stopVideo(self, packet: StopVideoPacket):
     self._video_player.stop()
