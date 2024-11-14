@@ -143,6 +143,7 @@ class OMXPlayerSync():
         signal.signal(signal.SIGINT, self.kill_omxplayer_and_exit)
 
     def run(self):
+        print('Running 2')
         self.omxplayer_options.append("--loop")
 
         # if not os.path.isfile(self.filename):
