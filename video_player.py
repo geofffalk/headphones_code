@@ -143,7 +143,6 @@ class OMXPlayerSync():
         signal.signal(signal.SIGINT, self.kill_omxplayer_and_exit)
 
     def run(self):
-        print('Running 2')
         self.omxplayer_options.append("--loop")
 
         # if not os.path.isfile(self.filename):
@@ -157,7 +156,7 @@ class OMXPlayerSync():
         if not self.is_conductor:
             self.read_position_conductor()
         
-        os.system("sudo fbi -a -noverbose -T 1 -t 1 ~/headphones_code/logo.png")
+        os.system("sudo fbi -a -noverbose -T 1 -t 1 /home/geoff/headphones_code/logo.png")
 
         while True:
             if (self.filename):
