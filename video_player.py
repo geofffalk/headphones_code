@@ -357,7 +357,7 @@ class OMXPlayerSync():
             # self.logger.debug(f"Data read from conductor: {decoded}")
             obj = json.loads(decoded)
             self.logger.debug(f"Json read from conductor: {obj}")
-            if obj["command"] != None:
+            if "command" in obj:
                 if obj["command"] == 'play_pause':
                     self.controller.playPause()
                 elif obj["command"] == 'stop':
