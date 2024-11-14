@@ -318,8 +318,7 @@ class OMXPlayerSync():
 
     def kill_omxplayer(self):
         try:
-            os.system('sudo killall omxplayer.bin')
-            # os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
+            os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
         except Exception as e:
             # os.system('sudo killall omxplayer.bin')
             print('Failed to kill omxplayer: {}'.format(e))
