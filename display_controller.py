@@ -294,7 +294,7 @@ class DisplayController:
 
     def controlVideo(self, packet: VideoControlPacket):
         if packet.controlCode == 3:
-            self._video_player.set_filename('~/videos/{}.mp4'.format(packet.videoIndex))
+            self._video_player.set_filename('/home/geoff/videos/{}.mp4'.format(packet.videoIndex))
         elif packet.controlCode == 2 or packet.controlCode == 1: 
             self._video_player.play_pause()
         elif packet.controlCode == 0:
