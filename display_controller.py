@@ -56,12 +56,6 @@ class DisplayController:
     tempBrightnessDuration = 0
     tempBrightnessStartTime = 0
 
-    videoMap = {
-        0: 'synctest.mp4',
-        1: 'synctest.mp4',
-        2: 'synctest.mp4'
-    }
-
     tickerPatternMap = {
         0: (1, 1),
         1: (1,1,-1),
@@ -300,7 +294,7 @@ class DisplayController:
 
     def controlVideo(self, packet: VideoControlPacket):
         if packet.controlCode == 3:
-            self._video_player.set_filename(self.videoMap[packet.videoIndex])
+            self._video_player.set_filename('videos/{}.mp4'.format(packet.videoIndex))
         elif packet.controlCode == 2 or packet.controlCode == 1: 
             self._video_player.play_pause()
         elif packet.controlCode == 0:
