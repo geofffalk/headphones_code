@@ -290,7 +290,7 @@ class OMXPlayerSync():
             self.serial.write(json.dumps(data).encode("utf-8"))
         self._running = False
         self.filename = None
-        self.kill_omxplayer()
+        # self.kill_omxplayer()
 
     def read_position_local(self):
         position_local = self.controller.Position()
