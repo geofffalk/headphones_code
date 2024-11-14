@@ -143,20 +143,15 @@ class OMXPlayerSync():
         signal.signal(signal.SIGINT, self.kill_omxplayer_and_exit)
 
     def run(self):
+        os.system("sudo fbi -a -noverbose -T 1 -t 1 /home/geoff/headphones_code/logo.png")
+        
         self.omxplayer_options.append("--loop")
-
-        # if not os.path.isfile(self.filename):
-        #     print("ERROR: none of the supplied filenames are found")
-        #     sys.exit(1)
-
         self.omxplayer_options.append("-o %s" % "both")
         self.omxplayer_options.append('--no-keys')
         self.omxplayer_options.append('--no-osd')
 
         if not self.is_conductor:
             self.read_position_conductor()
-        
-        os.system("sudo fbi -a -noverbose -T 1 -t 1 /home/geoff/headphones_code/logo.png")
 
         while True:
             if (self.filename):
