@@ -70,8 +70,8 @@ class PlayerInterface():
         try:
             self.methods.Action(16)
             return True
-        except:
-            print(e)
+        except Exception as e:
+            print('Error playing / pausing video: {}'.format(e))
             return False
 
     def setPosition(self, seconds):
@@ -320,7 +320,7 @@ class OMXPlayerSync():
         try:
             os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
         except:
-            os.system('sudo killall omxplayer.bin')
+            # os.system('sudo killall omxplayer.bin')
             pass
         try:
             self.process.wait()
