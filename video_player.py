@@ -181,13 +181,13 @@ class OMXPlayerSync():
         if self.is_conductor:
             self.send_position_local()
 
+        self.controller.initialize()
+
         self.process = Popen([OMXPLAYER] \
             + list(itertools.chain(*map(lambda x: x.split(' '), self.omxplayer_options))) \
             + [self.filename],
             preexec_fn=os.setsid, stdout=DEVNULL, stderr=DEVNULL, stdin=DEVNULL)
         print(f"Process is {self.process}") 
-
-        self.controller.initialize()
 
         if not self.read_position_local():
             print("WARNING: omxplayer did not start. Try to test with `omxplayer -s OPTIONS`")
