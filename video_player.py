@@ -292,6 +292,8 @@ class OMXPlayerSync():
             self.serial.write(json.dumps(data).encode("utf-8"))
         self._running = False
         self.filename = None
+        if not self.is_conductor:
+            self.filename_conductor = None
         # self.kill_omxplayer()
 
     def read_position_local(self):
