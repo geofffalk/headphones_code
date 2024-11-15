@@ -124,12 +124,7 @@ class OMXPlayerSync():
     def __init__(self, is_conductor):
         self.serial = self.init_serial()
         self.controller = PlayerInterface()
-        # self.parser = ArgumentParser()
-        # self.args = self.parser.parse_args()
-
         self.omxplayer_options = []
-        # self.playlist = []
-        # self.playlist_index = 0
         self.filename = ''
         self.is_conductor = is_conductor
         self.position_local = 0.0
@@ -161,6 +156,7 @@ class OMXPlayerSync():
         self.filename = filename
 
     def play_file(self, filename):
+        self.logger.debug("LOOP play_file l 159")
         if not os.path.isfile(filename):
             print("WARNING: %s file not found" % filename)
             return
@@ -194,7 +190,9 @@ class OMXPlayerSync():
             deviations = collections.deque(maxlen=10)
 
         while self._running:
+            self.logger.debug("LOOP while self running l 193")
             if not self.is_conductor:
+                self.logger.debug("Read conductor position l195")
                 self.read_position_conductor()
                 if wait_for_sync:
                     sync_timer = time()
@@ -217,6 +215,7 @@ class OMXPlayerSync():
 
             if not self.is_conductor:
                 if self.filename != self.filename_conductor:
+                    self.logger.debug("LOOP file name no match 218")
                     self.filename = self.filename_conductor
                     break
 
@@ -234,6 +233,7 @@ class OMXPlayerSync():
                     self.filename))
 
                 if wait_for_sync:
+                    self.logger.debug("LOOP wait for sync 236")
                     while True:
                         if abs(deviation) - (time() - sync_timer) < 0:
                             self.logger.debug("we are sync, play...")
@@ -246,6 +246,7 @@ class OMXPlayerSync():
                     continue
 
                 if wait_after_sync:
+                    self.logger.debug("LOOP wait after sync 249")                    
                     if (time() - wait_after_sync) > SYNC_GRACE_TIME:
                          wait_after_sync = False
 
@@ -270,6 +271,7 @@ class OMXPlayerSync():
         self.kill_omxplayer()
     
     def play_pause(self):
+        self.logger.debug("LOOP play pause 274")
         self.controller.playPause()
         if self.is_conductor:
             data = {
@@ -278,6 +280,7 @@ class OMXPlayerSync():
             self.serial.write(json.dumps(data).encode("utf-8"))
 
     def stop(self):
+        self.logger.debug("LOOP stop 283")
         if self.is_conductor:
             data = {
             "command": "stop",
@@ -347,6 +350,7 @@ class OMXPlayerSync():
     # follower specific
     #
     def read_position_conductor(self):
+        self.logger.debug("LOOP reading position 353")
         try:
             data = self.serial.read()
             sleep(0.03)
