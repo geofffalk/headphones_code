@@ -146,7 +146,11 @@ class OMXPlayerSync():
         self.omxplayer_options.append('--no-osd')
 
         if not self.is_conductor:
+            self.logger.debug("LOOP play_file l 149")
             self.read_position_conductor()
+            if self.filename != self.filename_conductor:
+                self.logger.debug("LOOP file name no match 218")
+                self.filename = self.filename_conductor
 
         while True:
             if (self.filename):
