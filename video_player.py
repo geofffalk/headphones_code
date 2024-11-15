@@ -91,6 +91,7 @@ class PlayerInterface():
                 'org.mpris.MediaPlayer2.Player',
                 'Position')
         except Exception as e:
+            print('Error getting position: {}'.format(e))
             return False
 
 
@@ -201,9 +202,8 @@ class OMXPlayerSync():
                 if wait_for_sync:
                     sync_timer = time()
 
-            # if not self.read_position_local():
-            #     self.increment_playlist_index()
-            #     break
+            if not self.read_position_local():
+                break
 
             if self.hangup_detected():
                 break
