@@ -134,6 +134,7 @@ class OMXPlayerSync():
         self.position_conductor = 0.0
         self.filename_conductor = ''
         self.process = None
+        self.pending_command = None
         self.logger = Logger(verbose = True)
 
         signal.signal(signal.SIGINT, self.kill_omxplayer_and_exit)
@@ -268,13 +269,13 @@ class OMXPlayerSync():
     def play_pause(self):
         self.controller.playPause()
         if self.is_conductor:
-            self._pending_command = 'play_pause'
+            self.pending_command = 'play_pause'
 
     def stop(self):
         self._running = False
         self.filename = None
         if self.is_conductor:
-            self._pending_command = 'stop'
+            self.pending_command = 'stop'
         else:
             self.filename_conductor = None
         # self.kill_omxplayer()
@@ -330,9 +331,9 @@ class OMXPlayerSync():
 	     "video_file": self.filename,
 	     "pos": self.position_local
         }
-        if self._pending_command:
-            data["command"] = self._pending_command
-            self._pending_command = None
+        if self.pending_command:
+            data["command"] = self.pending_command
+            self.pending_command = None
         message = json.dumps(data).encode("utf-8")
         # message = ("%s%%%s" % (str(self.position_local),  self.filename)).encode('utf-8')
         self.serial.write(message)
