@@ -25,6 +25,7 @@ import collections
 import serial
 from time import sleep, time
 from subprocess import Popen
+from threading import Thread
 try:
     from subprocess import DEVNULL
 except ImportError:
@@ -146,11 +147,15 @@ class OMXPlayerSync():
         self.omxplayer_options.append('--no-keys')
         self.omxplayer_options.append('--no-osd')
 
+        if not self.is_conductor:
+            mirror_listener = Thread(target=self.read_position_conductor)
+            mirror_listener.start()
+
         while True:
             if (self.filename):
                 self.play_file(self.filename)
             elif not self.is_conductor:
-                self.read_position_conductor()
+                # self.read_position_conductor()
                 self.filename = self.filename_conductor
                 
     
@@ -192,7 +197,7 @@ class OMXPlayerSync():
 
         while self._running:
             if not self.is_conductor:
-                self.read_position_conductor()
+                # self.read_position_conductor()
                 if wait_for_sync:
                     sync_timer = time()
 
@@ -273,10 +278,10 @@ class OMXPlayerSync():
     def stop(self):
         self._running = False
         self.filename = None
-        if self.is_conductor:
-            sleep(0.2)
-            self.send_position_local()
-            sleep(0.2)
+        # if self.is_conductor:
+            # sleep(0.2)
+            # self.send_position_local()
+            # sleep(0.2)
         # if self.is_conductor:
         #     self.send_command('stop')
         # else:
@@ -352,27 +357,28 @@ class OMXPlayerSync():
     # follower specific
     #
     def read_position_conductor(self):
-        try:
-            data = self.serial.read()
-            sleep(0.03)
-            if (self.serial.inWaiting() > 0):
-                data += self.serial.read(self.serial.inWaiting())
-            # decoded = data[0].decode('utf-8').split('%', 1)
-            decoded = data.decode("utf-8")
-            # self.logger.debug(f"Data read from conductor: {decoded}")
-            obj = json.loads(decoded)
-            self.logger.debug(f"Json read from conductor: {obj}")
-            if "command" in obj:
-                if obj["command"] == 'play_pause':
-                    self.controller.playPause()
-                # elif obj["command"] == 'stop':
-                #     self.stop()
-            else:
-                self.position_conductor = float(obj["pos"])
-                self.filename_conductor = obj["video_file"]
-        except Exception as e:
-            self.logger.error(e)
-            pass
+        while True:
+            try:
+                data = self.serial.read()
+                sleep(0.03)
+                if (self.serial.inWaiting() > 0):
+                    data += self.serial.read(self.serial.inWaiting())
+                # decoded = data[0].decode('utf-8').split('%', 1)
+                decoded = data.decode("utf-8")
+                # self.logger.debug(f"Data read from conductor: {decoded}")
+                obj = json.loads(decoded)
+                self.logger.debug(f"Json read from conductor: {obj}")
+                if "command" in obj:
+                    if obj["command"] == 'play_pause':
+                        self.controller.playPause()
+                    # elif obj["command"] == 'stop':
+                    #     self.stop()
+                else:
+                    self.position_conductor = float(obj["pos"])
+                    self.filename_conductor = obj["video_file"]
+            except Exception as e:
+                self.logger.error(e)
+                pass
 
     def median(self, lst):
         quotient, remainder = divmod(len(lst), 2)
