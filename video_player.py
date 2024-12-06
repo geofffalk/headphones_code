@@ -276,7 +276,7 @@ class OMXPlayerSync():
         if self.is_conductor:
             sleep(0.2)
             self.send_position_local()
-            sleep(0.2)
+            sleep(1)
         # if self.is_conductor:
         #     self.send_command('stop')
         # else:
