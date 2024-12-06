@@ -274,7 +274,9 @@ class OMXPlayerSync():
         self._running = False
         self.filename = None
         if self.is_conductor:
+            sleep(0.2)
             self.send_position_local()
+            sleep(0.2)
         # if self.is_conductor:
         #     self.send_command('stop')
         # else:
