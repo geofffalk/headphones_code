@@ -133,7 +133,9 @@ class OMXPlayerSync():
         self.position_local_oldage = 0.0
         self.position_local_oldage_count = 0
         self.position_conductor = 0.0
+        self.updated_position_conductor = 0.0
         self.filename_conductor = ''
+        self.updated_filename_conductor = ''
         self.process = None
         self.logger = Logger(verbose = True)
 
@@ -155,7 +157,8 @@ class OMXPlayerSync():
             if (self.filename):
                 self.play_file(self.filename)
             elif not self.is_conductor:
-                # self.read_position_conductor()
+                self.position_conductor = self.updated_position_conductor
+                self.filename_conductor = self.updated_filename_conductor
                 self.filename = self.filename_conductor
                 
     
@@ -197,7 +200,8 @@ class OMXPlayerSync():
 
         while self._running:
             if not self.is_conductor:
-                # self.read_position_conductor()
+                self.position_conductor = self.updated_position_conductor
+                self.filename_conductor = self.updated_filename_conductor
                 if wait_for_sync:
                     sync_timer = time()
 
@@ -371,11 +375,11 @@ class OMXPlayerSync():
                 if "command" in obj:
                     if obj["command"] == 'play_pause':
                         self.controller.playPause()
-                    # elif obj["command"] == 'stop':
-                    #     self.stop()
+                    elif obj["command"] == 'stop':
+                        self.stop()
                 else:
-                    self.position_conductor = float(obj["pos"])
-                    self.filename_conductor = obj["video_file"]
+                    self.updated_position_conductor = float(obj["pos"])
+                    self.updated_filename_conductor = obj["video_file"]
             except Exception as e:
                 self.logger.error(e)
                 pass
