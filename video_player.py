@@ -274,10 +274,11 @@ class OMXPlayerSync():
         self._running = False
         self.filename = None
         if self.is_conductor:
-            self.send_command('stop')
-        else:
-            self.filename_conductor = None
-        # self.kill_omxplayer()
+            self.send_position_local()
+        # if self.is_conductor:
+        #     self.send_command('stop')
+        # else:
+        #     self.filename_conductor = None
 
     def send_command(self, command): 
         data = {
@@ -362,8 +363,8 @@ class OMXPlayerSync():
             if "command" in obj:
                 if obj["command"] == 'play_pause':
                     self.controller.playPause()
-                elif obj["command"] == 'stop':
-                    self.stop()
+                # elif obj["command"] == 'stop':
+                #     self.stop()
             else:
                 self.position_conductor = float(obj["pos"])
                 self.filename_conductor = obj["video_file"]
